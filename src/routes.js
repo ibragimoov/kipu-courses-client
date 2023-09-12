@@ -52,21 +52,13 @@ var dashRoutes = [
     layout: "/admin",
   },
   {
-    path: "/rtl-support-page",
-    name: "RTL",
-    rtlName: "آرتيإل",
-    icon: <SupportIcon color="inherit" />,
-    component: RTLPage,
-    layout: "/rtl",
-  },
-  {
     name: "ACCOUNT PAGES",
     category: "account",
     rtlName: "صفحات",
     state: "pageCollapse",
     views: [
       {
-        path: "/profile",
+        path: "/student",
         name: "Profile",
         rtlName: "لوحة القيادة",
         icon: <PersonIcon color="inherit" />,

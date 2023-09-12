@@ -34,8 +34,11 @@ function SignIn() {
     // Store
     const dispatch = useDispatch();
     const { token, error } = useSelector((state) => state.admin);
+    
+    // Cookies
+    const cookieToken = parseCookies(null).jwt
 
-    if (token) {
+    if (token || cookieToken) {
         return <Redirect to="/admin/dashboard" />;
     }
 

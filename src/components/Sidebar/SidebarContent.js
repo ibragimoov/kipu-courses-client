@@ -37,6 +37,9 @@ const SidebarContent = ({ logoText, routes }) => {
     const inactiveColor = useColorModeValue("gray.400", "gray.400");
 
     return routes.map((prop, key) => {
+      if (prop.path === '/student') {
+        return
+      }
       if (prop.redirect) {
         return null;
       }

@@ -28,8 +28,20 @@ import Projects from "./components/Projects";
 import SalesOverview from "./components/SalesOverview";
 import WorkWithTheRockets from "./components/WorkWithTheRockets";
 
+import { useSelector } from "react-redux";
+import { Redirect } from 'react-router-dom'
+import { parseCookies } from 'nookies'
+
 export default function Dashboard() {
+    // Styles
     const iconBoxInside = useColorModeValue("white", "white");
+
+    // Store
+    const token = parseCookies(null).jwt
+
+    if (!token) {
+        return <Redirect to="/auth/signin" />;
+    }
 
     return (
         <Flex flexDirection="column" pt={{ base: "120px", md: "75px" }}>

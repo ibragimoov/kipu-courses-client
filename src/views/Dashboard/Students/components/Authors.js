@@ -42,7 +42,7 @@ const Authors = ({ title, captions, data }) => {
             {data.map((row, i) => {
               return (
                 <TablesTableRow
-                  index={i}
+                  index={i + 1}
                   key={`${row.email}-${row.name}`}
                   fullName={`${row.last_name} ${row.first_name} ${row.patronimic}`}
                   subjects={row.subjects}

@@ -22,19 +22,19 @@ const PlatformSettings = ({ title, subtitle1, subtitle2 }) => {
             {subtitle1}
           </Text>
           <Flex align='center' mb='20px'>
-            <Switch colorScheme='teal' me='10px' />
+            <Switch colorscheme='teal' me='10px' />
             <Text noOfLines={1} fontSize='md' color='gray.500' fontWeight='400'>
               Email me when someone follows me
             </Text>
           </Flex>
           <Flex align='center' mb='20px'>
-            <Switch colorScheme='teal' me='10px' />
+            <Switch colorscheme='teal' me='10px' />
             <Text noOfLines={1} fontSize='md' color='gray.500' fontWeight='400'>
               Email me when someone answers on my post
             </Text>
           </Flex>
           <Flex align='center' mb='20px'>
-            <Switch colorScheme='teal' me='10px' />
+            <Switch colorscheme='teal' me='10px' />
             <Text noOfLines={1} fontSize='md' color='gray.500' fontWeight='400'>
               Email me when someone mentions me
             </Text>
@@ -47,19 +47,19 @@ const PlatformSettings = ({ title, subtitle1, subtitle2 }) => {
             {subtitle2}
           </Text>
           <Flex align='center' mb='20px'>
-            <Switch colorScheme='teal' me='10px' />
+            <Switch colorscheme='teal' me='10px' />
             <Text noOfLines={1} fontSize='md' color='gray.500' fontWeight='400'>
               New launches and projects
             </Text>
           </Flex>
           <Flex align='center' mb='20px'>
-            <Switch colorScheme='teal' me='10px' />
+            <Switch colorscheme='teal' me='10px' />
             <Text noOfLines={1} fontSize='md' color='gray.500' fontWeight='400'>
               Monthly product changes
             </Text>
           </Flex>
           <Flex align='center' mb='20px'>
-            <Switch colorScheme='teal' me='10px' />
+            <Switch colorscheme='teal' me='10px' />
             <Text noOfLines={1} fontSize='md' color='gray.500' fontWeight='400'>
               Subscribe to newsletter
             </Text>
