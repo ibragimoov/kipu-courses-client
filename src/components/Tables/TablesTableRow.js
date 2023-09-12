@@ -10,17 +10,35 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 
+import moment from 'moment';
+
 function TablesTableRow(props) {
-  const { logo, name, email, subdomain, domain, status, date } = props;
+  // Styles
   const textColor = useColorModeValue("gray.700", "white");
   const bgStatus = useColorModeValue("gray.400", "#1a202c");
   const colorStatus = useColorModeValue("white", "gray.400");
 
+  // Props
+  const { fullName, email, status, createdAt, subjects, index, isFilter } = props;
+
   return (
-    <Tr>
+    <Tr _hover={{ backgroundColor: 'gray.100' }}>
+      <Td pl="10px">
+        <Flex align="center" minWidth="100%" flexWrap="nowrap">
+          <Flex direction="column">
+            <Text
+              fontSize="md"
+              color={textColor}
+              fontWeight="bold"
+            >
+              {index}
+            </Text>
+          </Flex>
+        </Flex>
+      </Td>
+
       <Td minWidth={{ sm: "250px" }} pl="0px">
         <Flex align="center" py=".8rem" minWidth="100%" flexWrap="nowrap">
-          <Avatar src={logo} w="50px" borderRadius="12px" me="18px" />
           <Flex direction="column">
             <Text
               fontSize="md"
@@ -28,7 +46,7 @@ function TablesTableRow(props) {
               fontWeight="bold"
               minWidth="100%"
             >
-              {name}
+              {fullName}
             </Text>
             <Text fontSize="sm" color="gray.400" fontWeight="normal">
               {email}
@@ -37,16 +55,17 @@ function TablesTableRow(props) {
         </Flex>
       </Td>
 
-      <Td>
-        <Flex direction="column">
-          <Text fontSize="md" color={textColor} fontWeight="bold">
-            {domain}
-          </Text>
-          <Text fontSize="sm" color="gray.400" fontWeight="normal">
-            {subdomain}
-          </Text>
-        </Flex>
-      </Td>
+      {!isFilter &&
+        <Td>
+          <Flex direction="column">
+            {subjects.map((subject) => (
+            <Text key={subject._id} fontSize="md" color={textColor} fontWeight="bold">
+              { subject.title }
+            </Text>
+            ))}
+          </Flex>
+        </Td>
+      }
       <Td>
         <Badge
           bg={status === "Online" ? "green.400" : bgStatus}
@@ -60,7 +79,7 @@ function TablesTableRow(props) {
       </Td>
       <Td>
         <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
-          {date}
+          { moment(createdAt).format('DD:MM:YYYY HH:mm') }
         </Text>
       </Td>
       <Td>
@@ -71,7 +90,7 @@ function TablesTableRow(props) {
             fontWeight="bold"
             cursor="pointer"
           >
-            Edit
+             Подробнее
           </Text>
         </Button>
       </Td>

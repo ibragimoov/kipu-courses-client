@@ -89,7 +89,7 @@ export default function Dashboard(props) {
 		<ChakraProvider theme={theme} resetCss={false}>
 			<Sidebar
 				routes={routes}
-				logoText={'PURITY UI DASHBOARD'}
+				logoText={'КИПУ ПК'}
 				display='none'
 				sidebarVariant={sidebarVariant}
 				{...rest}
@@ -102,7 +102,7 @@ export default function Dashboard(props) {
 				<Portal>
 					<AdminNavbar
 						onOpen={onOpen}
-						logoText={'PURITY UI DASHBOARD'}
+						logoText={'КИПУ ПК'}
 						brandText={getActiveRoute(routes)}
 						secondary={getActiveNavbar(routes)}
 						fixed={fixed}

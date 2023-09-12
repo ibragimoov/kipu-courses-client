@@ -25,6 +25,7 @@ function SignIn() {
     // Chakra color mode
     const titleColor = useColorModeValue("teal.300", "teal.200");
     const textColor = useColorModeValue("gray.400", "white");
+    const errorTextColor = useColorModeValue("red.400", "red");
 
     // Admin state
     const [login, setLogin] = React.useState("");
@@ -32,7 +33,7 @@ function SignIn() {
 
     // Store
     const dispatch = useDispatch();
-    const token = useSelector((state) => state.admin.token);
+    const { token, error } = useSelector((state) => state.admin);
 
     if (token) {
         return <Redirect to="/admin/dashboard" />;
@@ -89,15 +90,26 @@ function SignIn() {
                             fontWeight="bold"
                             fontSize="14px"
                         >
-                            Enter your email and password to sign in
+                            Enter your login and password to sign in
                         </Text>
                         <FormControl>
+                            {error && 
+                            <Text
+                                mb="36px"
+                                ms="4px"
+                                color={errorTextColor}
+                                fontWeight="bold"
+                                fontSize="14px"
+                            >
+                                { error }
+                            </Text>
+                            }
                             <FormLabel
                                 ms="4px"
                                 fontSize="sm"
                                 fontWeight="normal"
                             >
-                                Email
+                                Login
                             </FormLabel>
                             <Input
                                 value={login}

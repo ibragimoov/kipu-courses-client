@@ -7,12 +7,21 @@ const initialState = {
     login: null,
     name: null,
     token: null,
+    error: null
 };
 
-export const signIn = createAsyncThunk("signin", async (adminDto) => {
-    const { data } = await axios.post("auth/login", adminDto);
+export const signIn = createAsyncThunk("signin", async (adminDto, { rejectWithValue }) => {
+    try {
+        const { data } = await axios.post("auth/login", adminDto);
+    
+        return await data.token;
+    } catch (error) {
+        if (!error.response) {
+            throw error
+        }
 
-    return await data.token;
+        return rejectWithValue(error.response.data)
+    }
 });
 
 const adminSlice = createSlice({
@@ -21,9 +30,11 @@ const adminSlice = createSlice({
     reducers: {},
     extraReducers: {
         [signIn.fulfilled]: (state, { payload }) => {
-            console.log(payload);
             state.token = payload;
             nookies.set(null, "jwt", payload);
+        },
+        [signIn.rejected]: (state, { payload }) => {
+            state.error = payload.message
         },
     },
 });

@@ -1,5 +1,6 @@
 // Chakra imports
 import {
+  Flex,
   Table,
   Tbody,
   Text,
@@ -12,22 +13,24 @@ import {
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import CardHeader from "components/Card/CardHeader.js";
-import TablesTableRow from "components/Tables/TablesTableRow";
+import TablesProjectRow from "components/Tables/TablesProjectRow";
 import React from "react";
 
-const Authors = ({ title, captions, data }) => {
+const Projects = ({ title, captions, data }) => {
   const textColor = useColorModeValue("gray.700", "white");
   return (
-    <Card overflowX={{ sm: "scroll", xl: "hidden" }}>
+    <Card my='22px' overflowX={{ sm: "scroll", xl: "hidden" }}>
       <CardHeader p='6px 0px 22px 0px'>
-        <Text fontSize='xl' color={textColor} fontWeight='bold'>
-          {title}
-        </Text>
+        <Flex direction='column'>
+          <Text fontSize='lg' color={textColor} fontWeight='bold' pb='.5rem'>
+            {title}
+          </Text>
+        </Flex>
       </CardHeader>
       <CardBody>
         <Table variant='simple' color={textColor}>
           <Thead>
-            <Tr my='.8rem' pl='0px' color='gray.400'>
+            <Tr my='.8rem' pl='0px'>
               {captions.map((caption, idx) => {
                 return (
                   <Th color='gray.400' key={idx} ps={idx === 0 ? "0px" : null}>
@@ -40,15 +43,13 @@ const Authors = ({ title, captions, data }) => {
           <Tbody>
             {data.map((row) => {
               return (
-                <TablesTableRow
-                  key={`${row.email}-${row.name}`}
+                <TablesProjectRow
+                  key={row.name}
                   name={row.name}
                   logo={row.logo}
-                  email={row.email}
-                  subdomain={row.subdomain}
-                  domain={row.domain}
                   status={row.status}
-                  date={row.date}
+                  budget={row.budget}
+                  progression={row.progression}
                 />
               );
             })}
@@ -59,4 +60,4 @@ const Authors = ({ title, captions, data }) => {
   );
 };
 
-export default Authors;
+export default Projects;

@@ -1,6 +1,7 @@
 // import
 import Dashboard from "views/Dashboard/Dashboard";
-import Tables from "views/Dashboard/Tables";
+import Students from "views/Dashboard/Students";
+import SubjectsStudents from "views/Dashboard/SubjectsStudents";
 import Billing from "views/Dashboard/Billing";
 import RTLPage from "views/Dashboard/RTL";
 import Profile from "views/Dashboard/Profile";
@@ -20,18 +21,26 @@ import {
 var dashRoutes = [
   {
     path: "/dashboard",
-    name: "Dashboard",
+    name: "Главная",
     rtlName: "لوحة القيادة",
     icon: <HomeIcon color="inherit" />,
     component: Dashboard,
     layout: "/admin",
   },
   {
-    path: "/tables",
-    name: "Tables",
+    path: "/students",
+    name: "Ученики",
     rtlName: "لوحة القيادة",
     icon: <StatsIcon color="inherit" />,
-    component: Tables,
+    component: Students,
+    layout: "/admin",
+  },  
+  {
+    path: "/subject",
+    name: "Предметы",
+    rtlName: "لوحة القيادة",
+    icon: <StatsIcon color="inherit" />,
+    component: SubjectsStudents,
     layout: "/admin",
   },
   {
