@@ -48,6 +48,7 @@ function Profile() {
         status: 'success',
         duration: 5000,
         isClosable: true,
+        position: 'bottom-right',
       })
     })
     .catch(() => {
@@ -55,6 +56,7 @@ function Profile() {
         title: 'Произошла ошибка :(',
         status: 'error',
         isClosable: true,
+        position: 'bottom-right',
       })
     })
   }

@@ -5,24 +5,117 @@ import {
   Flex,
   FormControl,
   FormLabel,
-  HStack,
-  Icon,
   Input,
   Link,
-  Switch,
   Text,
   useColorModeValue,
+  Checkbox
 } from "@chakra-ui/react";
+import { useToast } from '@chakra-ui/react'
 // Assets
 import BgSignUp from "assets/img/BgSignUp.png";
-import React from "react";
-import { FaApple, FaFacebook, FaGoogle } from "react-icons/fa";
+import React, { useState } from "react";
+
+import axios from '../../axios'
 
 function SignUp() {
+  // Styles
   const titleColor = useColorModeValue("teal.300", "teal.200");
   const textColor = useColorModeValue("gray.700", "white");
   const bgColor = useColorModeValue("white", "gray.700");
-  const bgIcons = useColorModeValue("teal.200", "rgba(255, 255, 255, 0.5)");
+  const toast = useToast()
+
+  // State
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [patronimic, setPatronimic] = useState('')
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [studyFrom, setStudyFrom] = useState('')
+  const [subjects, setSubjects] = useState([])
+
+  // Form
+  const [isFromValid, setIsFromValid] = useState(false)
+
+  const actualSubjects = [
+    'Математика (профильная)',
+    'Русский язык',
+    'Обществознание',
+    'Биология',
+    'Английский язык',
+    'Информатика'
+  ]
+  
+  const handleCheckboxEvent = (event) => {
+    const value = event.target.value;
+
+    if (event.target.checked) {
+      setSubjects([...subjects, value])
+    } else {
+      const excludedSubject = subjects.filter((subject => subject !== value))
+      setSubjects(excludedSubject)
+    }
+  };
+
+  const validateForm = () => {
+    if (
+      firstName.trim() === '' ||
+      lastName.trim() === '' ||
+      email.trim() === '' ||
+      phone.trim() === '' ||
+      studyFrom.trim() === '' ||
+      subjects.length === 0
+    ) {
+      toast({
+        title: 'Ошибка отправки формы',
+        description: 'Заполните все поля формы',
+        status: 'error',
+        duration: 5000,
+        position: 'bottom-right',
+        isClosable: true,
+      });
+      setIsFromValid(false);
+    } else {
+      setIsFromValid(true);
+    }
+  };
+
+  const onSubmit = () => {
+    validateForm()
+
+    if (isFromValid) {
+      const newStudent = { 
+        first_name: firstName,
+        last_name: lastName,
+        patronimic,
+        email,
+        phone,
+        studyFrom,
+        subjects
+      }
+  
+      axios.post('student', newStudent)
+      .then(() => {
+        toast({
+          title: 'Заявка успешно отправлена, ждите звонка в ближайшие часы :)',
+          status: 'success',
+          duration: 5000,
+          isClosable: true,
+          position: 'bottom-right',
+        })
+      })
+      .catch((e) => {
+        const { message } = e.response.data
+        toast({
+          title: `Ошибка: ${message}`,
+          status: 'error',
+          isClosable: true,
+          position: 'bottom-right',
+        })
+      })
+    }
+  }
+
   return (
     <Flex
       direction='column'
@@ -31,6 +124,7 @@ function SignUp() {
       overflow='hidden'>
       <Box
         position='absolute'
+        marginTop={'-40px'}
         minH={{ base: "70vh", md: "50vh" }}
         w={{ md: "calc(100vw - 50px)" }}
         borderRadius={{ md: "15px" }}
@@ -52,7 +146,7 @@ function SignUp() {
         mt='6.5rem'
         mb='30px'>
         <Text fontSize='4xl' color='white' fontWeight='bold'>
-          Welcome!
+          Подготовительные курсы КИПУ<br/> имени Февзи Якубова
         </Text>
         <Text
           fontSize='md'
@@ -61,18 +155,18 @@ function SignUp() {
           mt='10px'
           mb='26px'
           w={{ base: "90%", sm: "60%", lg: "40%", xl: "30%" }}>
-          Use these awesome forms to login or create new account in your project
-          for free.
+          Отправь заявку для зачисления на выбранный курс для подготовке к ЕГЭ
         </Text>
       </Flex>
-      <Flex alignItems='center' justifyContent='center' mb='60px' mt='20px'>
+      <Flex alignItems='center' w={'100%'} justifyContent='center' mb='60px' mt='20px'>
         <Flex
+          marginTop={'-40px'}
           direction='column'
           w='445px'
           background='transparent'
           borderRadius='15px'
           p='40px'
-          mx={{ base: "100px" }}
+          mx={{ md: "100px", sm: '30px' }}
           bg={bgColor}
           boxShadow='0 20px 27px 0 rgb(0 0 0 / 5%)'>
           <Text
@@ -81,122 +175,129 @@ function SignUp() {
             fontWeight='bold'
             textAlign='center'
             mb='22px'>
-            Register With
-          </Text>
-          <HStack spacing='15px' justify='center' mb='22px'>
-            <Flex
-              justify='center'
-              align='center'
-              w='75px'
-              h='75px'
-              borderRadius='15px'
-              border='1px solid lightgray'
-              cursor='pointer'
-              transition='all .25s ease'
-              _hover={{ filter: "brightness(120%)", bg: bgIcons }}>
-              <Link href='#'>
-                <Icon
-                  as={FaFacebook}
-                  w='30px'
-                  h='30px'
-                  _hover={{ filter: "brightness(120%)" }}
-                />
-              </Link>
-            </Flex>
-            <Flex
-              justify='center'
-              align='center'
-              w='75px'
-              h='75px'
-              borderRadius='15px'
-              border='1px solid lightgray'
-              cursor='pointer'
-              transition='all .25s ease'
-              _hover={{ filter: "brightness(120%)", bg: bgIcons }}>
-              <Link href='#'>
-                <Icon
-                  as={FaApple}
-                  w='30px'
-                  h='30px'
-                  _hover={{ filter: "brightness(120%)" }}
-                />
-              </Link>
-            </Flex>
-            <Flex
-              justify='center'
-              align='center'
-              w='75px'
-              h='75px'
-              borderRadius='15px'
-              border='1px solid lightgray'
-              cursor='pointer'
-              transition='all .25s ease'
-              _hover={{ filter: "brightness(120%)", bg: bgIcons }}>
-              <Link href='#'>
-                <Icon
-                  as={FaGoogle}
-                  w='30px'
-                  h='30px'
-                  _hover={{ filter: "brightness(120%)" }}
-                />
-              </Link>
-            </Flex>
-          </HStack>
-          <Text
-            fontSize='lg'
-            color='gray.400'
-            fontWeight='bold'
-            textAlign='center'
-            mb='22px'>
-            or
+            Заполни форму
           </Text>
           <FormControl>
             <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
-              Name
+              Фамилия {" "}
+              <Text as='span' color='red.500' fontWeight='bold'>
+              *
+              </Text>
             </FormLabel>
             <Input
               fontSize='sm'
               ms='4px'
               borderRadius='15px'
               type='text'
-              placeholder='Your full name'
+              placeholder='Иванов'
               mb='24px'
               size='lg'
+              value={lastName}  
+              required
+              onChange={(e) =>{ setLastName(e.target.value) 
+                console.log(e.target.value)}}
             />
             <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
-              Email
+              Имя{" "}
+              <Text as='span' color='red.500' fontWeight='bold'>
+              *
+              </Text>
+            </FormLabel>
+            <Input
+              fontSize='sm'
+              ms='4px'
+              borderRadius='15px'
+              type='text'
+              placeholder='Иван'
+              mb='24px'
+              size='lg'
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+            <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
+              Отчество{" "}
+              <Text as='span' color='red.500' fontWeight='bold'>
+              *
+              </Text>
+            </FormLabel>
+            <Input
+              fontSize='sm'
+              ms='4px'
+              borderRadius='15px'
+              type='text'
+              placeholder='Иванович'
+              mb='24px'
+              size='lg'
+              value={patronimic}
+              onChange={(e) => setPatronimic(e.target.value)}
+            />
+            <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
+              Эл. почта{" "}
+              <Text as='span' color='red.500' fontWeight='bold'>
+              *
+              </Text>
             </FormLabel>
             <Input
               fontSize='sm'
               ms='4px'
               borderRadius='15px'
               type='email'
-              placeholder='Your email address'
+              placeholder='ivan@mail.ru'
               mb='24px'
               size='lg'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
-              Password
+              Телефон{" "}
+              <Text as='span' color='red.500' fontWeight='bold'>
+              *
+              </Text>
             </FormLabel>
             <Input
               fontSize='sm'
               ms='4px'
               borderRadius='15px'
-              type='password'
-              placeholder='Your password'
+              type='text'
+              placeholder='+79781234567'
               mb='24px'
               size='lg'
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
             />
-            <FormControl display='flex' alignItems='center' mb='24px'>
-              <Switch id='remember-login' colorscheme='teal' me='10px' />
-              <FormLabel htmlFor='remember-login' mb='0' fontWeight='normal'>
-                Remember me
-              </FormLabel>
-            </FormControl>
+            <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
+              Что закончил{" "}
+              <Text as='span' color='red.500' fontWeight='bold'>
+              *
+              </Text>
+            </FormLabel>
+            <Input
+              fontSize='sm'
+              ms='4px'
+              borderRadius='15px'
+              type='text'
+              placeholder='Школа: МБОУ СОШ №44'
+              mb='24px'
+              size='lg'
+              value={studyFrom}
+              onChange={(e) => setStudyFrom(e.target.value)}
+            />
+            <FormLabel>
+              Предметы {" "}
+              <Text as='span' color='red.500' fontWeight='bold'>
+              *
+              </Text>
+            </FormLabel>
+              {actualSubjects.map((actualSubject, i) => (
+                <><Checkbox key={i} value={actualSubject} onChange={(e) => handleCheckboxEvent(e)} >{ actualSubject }</Checkbox><br/></>
+              ))}
+            </FormControl>          
             <Button
+              marginTop={'20px'}
+              onClick={() => onSubmit()}
               type='submit'
               bg='teal.300'
-              fontSize='10px'
+              fontSize='18px'
               color='white'
               fontWeight='bold'
               w='100%'
@@ -208,27 +309,8 @@ function SignUp() {
               _active={{
                 bg: "teal.400",
               }}>
-              SIGN UP
+              Отправить
             </Button>
-          </FormControl>
-          <Flex
-            flexDirection='column'
-            justifyContent='center'
-            alignItems='center'
-            maxW='100%'
-            mt='0px'>
-            <Text color={textColor} fontWeight='medium'>
-              Already have an account?
-              <Link
-                color={titleColor}
-                as='span'
-                ms='5px'
-                href='#'
-                fontWeight='bold'>
-                Sign In
-              </Link>
-            </Text>
-          </Flex>
         </Flex>
       </Flex>
     </Flex>

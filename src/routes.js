@@ -29,7 +29,7 @@ var dashRoutes = [
   },
   {
     path: "/students",
-    name: "Ученики",
+    name: "Заявки",
     rtlName: "لوحة القيادة",
     icon: <StatsIcon color="inherit" />,
     component: Students,

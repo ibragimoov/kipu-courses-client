@@ -22,9 +22,6 @@ import {
   Checkbox,
   Select
 } from '@chakra-ui/react'
-import { useToast } from '@chakra-ui/react'
-
-import axios from '../../../../axios'
 
 const ProfileInformation = ({
   title,
@@ -110,17 +107,6 @@ const ProfileInformation = ({
     const { value } = event.target
     handleSuccessUpdate({ status: value })
   }
-
-  console.log(subjectsProps)
-
-  // let selectedSubjects
-  // if (subjectsProps) {
-  //   selectedSubjects = subjectsProps?.map(subject => {
-  //     return subject.title
-  //   })
-  // } else {
-  //   selectedSubjects = []
-  // }
 
   return (
     <Card p='16px' my={{ sm: "24px", xl: "0px" }}>

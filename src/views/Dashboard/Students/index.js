@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import Authors from "./components/Authors";
 import Projects from "./components/Projects";
 import { tablesTableData, dashboardTableData } from "variables/general";
-import { Spinner } from '@chakra-ui/react'
+import { Spinner, Text } from '@chakra-ui/react'
 
 import axios from '../../../axios'
 
@@ -23,19 +23,13 @@ function Students() {
 
   return (
     <Flex direction='column' pt={{ base: "120px", md: "75px" }}>
-      {filteredStudents ?
+      {filteredStudents.length !== 0 ?
       <Authors
-        title={"Все студенты"}
+        title={"Все заявки"}
         captions={["№", "ФИО", "Предметы", "Status", "Дата", ""]}
         data={filteredStudents}
       /> : 
-      <Spinner
-        thickness='4px'
-        speed='0.65s'
-        emptyColor='gray.200'
-        color='blue.500'
-        size='xl'
-      />
+      <Text marginLeft={'20px'} marginTop={'20px'} fontSize={'3xl'}>В настоящее время заявок нет</Text>
       }
     </Flex>
   );

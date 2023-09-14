@@ -40,6 +40,7 @@ const Authors = ({ title, captions, data }) => {
           </Thead>
           <Tbody>
             {data.map((row, i) => {
+              if (row.status !== 'Исключен' && row.status !== 'Новая заявка')
               return (
                 <TablesTableRow
                   index={i + 1}
