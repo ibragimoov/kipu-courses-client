@@ -45,36 +45,36 @@ function SubjectsStudents() {
 
   return (
     <Flex direction='column' pt={{ base: "120px", md: "75px" }}>
-      <Authors
+      {math.length !== 0 && <Authors
         title={"Математика (профильная)"}
-        captions={["№", "ФИО", "Статус", "Дата", ""]}
+        captions={["№", "ФИО", "Дата", ""]}
         data={math}
-      />
-      <Authors
+      />}
+      {rus.length !== 0 && <Authors
         title={"Русский язык"}
-        captions={["№", "ФИО", "Статус", "Дата", ""]}
+        captions={["№", "ФИО", "Дата", ""]}
         data={rus}
-      />
-      <Authors
+      />}
+      {inf.length !== 0 && <Authors
         title={"Информатика"}
-        captions={["№", "ФИО", "Статус", "Дата", ""]}
+        captions={["№", "ФИО", "Дата", ""]}
         data={inf}
-      />
-      <Authors
+      />}
+      {bio.length !== 0 && <Authors
         title={"Биология"}
-        captions={["№", "ФИО", "Статус", "Дата", ""]}
+        captions={["№", "ФИО", "Дата", ""]}
         data={bio}
-      />
-      <Authors
+      />}
+      {soc.length !== 0 && <Authors
         title={"Обществознание"}
-        captions={["№", "ФИО", "Статус", "Дата", ""]}
+        captions={["№", "ФИО", "Дата", ""]}
         data={soc}
-      />
-      <Authors
+      />}
+      {eng.length !== 0 && <Authors
         title={"Английский язык"}
-        captions={["№", "ФИО", "Статус", "Дата", ""]}
+        captions={["№", "ФИО", "Дата", ""]}
         data={eng}
-      />
+      />}
       {/* <Projects
         title={"Projects Table"}
         captions={["Companies", "Budget", "Status", "Completion", ""]}

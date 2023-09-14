@@ -45,11 +45,10 @@ const Authors = ({ title, captions, data }) => {
                   index={i + 1}
                   key={`${row.email}-${row.name}`}
                   fullName={`${row.last_name} ${row.first_name} ${row.patronimic}`}
-                  subjects={row.subjects}
                   email={row.email}
                   createdAt={row.createdAt}
-                  status={row.status}
                   isFilter={captions.length === 5 ? true : false}
+                  id={row._id}
                 />
               );
             })}

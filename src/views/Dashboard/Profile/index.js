@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import { Redirect } from "react-router-dom";
+
 // Chakra imports
 import { Flex, Grid, useColorModeValue } from "@chakra-ui/react";
 import avatar4 from "assets/img/avatars/avatar4.png";
@@ -11,18 +14,70 @@ import PlatformSettings from "./components/PlatformSettings";
 import ProfileInformation from "./components/ProfileInformation";
 import Projects from "./components/Projects";
 
-import AdminLayout from '../../../layouts/Admin'
+import { useToast } from '@chakra-ui/react'
 
+import axios from '../../../axios'
 function Profile() {
   // Chakra color mode
   const textColor = useColorModeValue("gray.700", "white");
+  const toast = useToast()
   const bgProfile = useColorModeValue(
     "hsla(0,0%,100%,.8)",
     "linear-gradient(112.83deg, rgba(255, 255, 255, 0.21) 0%, rgba(255, 255, 255, 0) 110.84%)"
   );
-  
+
+
+  // State
+  const [studentDetails, setStudentDetails] = useState({})
+  const [redirectToStudents, setRedirectToStudents] = useState(false);
+
   // Params
   const id = location.pathname.split('/')[3]
+
+  if (!id) {
+    return <Redirect to="/admin/students" />;
+  }
+  
+  const handleSuccessUpdate = (updatedUserData) => {
+    axios.patch(`student/${id}`, updatedUserData)
+    .then((res) => {
+      const data = res.data
+      setStudentDetails(data)
+      toast({
+        title: 'Данные студента успешно обновлены.',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      })
+    })
+    .catch(() => {
+      toast({
+        title: 'Произошла ошибка :(',
+        status: 'error',
+        isClosable: true,
+      })
+    })
+  }
+
+  useEffect(() => {
+    axios.get(`student/${id}`)
+    .then((res) => {
+      const { data } = res
+      setStudentDetails(data)
+    })
+    .catch((e) => {
+      setRedirectToStudents(true)
+    })
+  }, [])
+
+  if (redirectToStudents) {
+    return <Redirect to="/admin/students" />;
+  }
+  
+  let fullName
+  if (studentDetails) {
+    fullName = `${studentDetails.last_name} ${studentDetails.first_name} ${studentDetails.patronimic}`
+  }
 
   return (
     <Flex direction='column'>
@@ -30,8 +85,8 @@ function Profile() {
         backgroundHeader={ProfileBgImage}
         backgroundProfile={bgProfile}
         avatarImage={avatar4}
-        name={"Esthera Jackson"}
-        email={"esthera@simmmple.com"}
+        name={fullName}
+        email={studentDetails.email}
         tabs={[
           {
             name: "OVERVIEW",
@@ -48,24 +103,31 @@ function Profile() {
         ]}
       />
       <Grid templateColumns={{ sm: "1fr", xl: "repeat(3, 1fr)" }} gap='22px'>
-        <PlatformSettings
+        {/* <PlatformSettings
           title={"Platform Settings"}
           subtitle1={"ACCOUNT"}
           subtitle2={"APPLICATION"}
-        />
-        <ProfileInformation
-          title={"Profile Information"}
-          description={
-            "Hi, I’m Esthera Jackson, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality)."
-          }
-          name={"Esthera Jackson"}
-          mobile={"(44) 123 1234 123"}
-          email={"esthera@simmmple.com"}
-          location={"United States"}
-        />
-        <Conversations title={"Conversations"} />
+        /> */}
+        {studentDetails ?
+          <ProfileInformation
+          title={"Информация о студенте"}
+          name={`${studentDetails.last_name} ${studentDetails.first_name} ${studentDetails.patronimic}`}
+          first_name={studentDetails.first_name}
+          last_name={studentDetails.last_name}
+          patronimicProps={studentDetails.patronimic}
+          phoneProps={studentDetails.phone}
+          emailProps={studentDetails.email}
+          subjectsProps={studentDetails.subjects}
+          study_from={studentDetails.study_from}
+          id={studentDetails._id}
+          handleSuccessUpdate={handleSuccessUpdate}
+          />
+          :
+          <h1>Загрузка данных. . .</h1>
+        }
+        {/* <Conversations title={"Conversations"} /> */}
       </Grid>
-      <Projects title={"Projects"} description={"Architects design houses"} />
+      {/* <Projects title={"Projects"} description={"Architects design houses"} /> */}
     </Flex>
   );
 }

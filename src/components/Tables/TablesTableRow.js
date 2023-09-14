@@ -11,6 +11,7 @@ import {
 import React from "react";
 
 import moment from 'moment';
+import { Link } from "react-router-dom";
 
 function TablesTableRow(props) {
   // Styles
@@ -19,7 +20,7 @@ function TablesTableRow(props) {
   const colorStatus = useColorModeValue("white", "gray.400");
 
   // Props
-  const { fullName, email, status, createdAt, subjects, index, isFilter } = props;
+  const { id, fullName, email, status, createdAt, subjects, index, isFilter } = props;
 
   return (
     <Tr _hover={{ backgroundColor: 'gray.100' }}>
@@ -55,7 +56,7 @@ function TablesTableRow(props) {
         </Flex>
       </Td>
 
-      {!isFilter &&
+      {!isFilter && subjects &&
         <Td>
           <Flex direction="column">
             {subjects.map((subject) => (
@@ -66,7 +67,8 @@ function TablesTableRow(props) {
           </Flex>
         </Td>
       }
-      <Td>
+      {status && 
+        <Td>
         <Badge
           bg={status === "Online" ? "green.400" : bgStatus}
           color={status === "Online" ? "white" : colorStatus}
@@ -77,6 +79,7 @@ function TablesTableRow(props) {
           {status}
         </Badge>
       </Td>
+      }
       <Td>
         <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
           { moment(createdAt).format('DD:MM:YYYY HH:mm') }
@@ -84,14 +87,16 @@ function TablesTableRow(props) {
       </Td>
       <Td>
         <Button p="0px" bg="transparent" variant="no-hover">
-          <Text
-            fontSize="md"
-            color="gray.400"
-            fontWeight="bold"
-            cursor="pointer"
-          >
-             Подробнее
-          </Text>
+          <Link to={`/admin/student/${id}`}>
+            <Text
+              fontSize="md"
+              color="gray.400"
+              fontWeight="bold"
+              cursor="pointer"
+            >
+              Подробнее
+            </Text>
+          </Link>
         </Button>
       </Td>
     </Tr>

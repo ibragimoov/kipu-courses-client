@@ -75,6 +75,7 @@ const Header = ({
               w='80px'
               h='80px'
               borderRadius='15px'
+              background={''}
             />
             <Flex direction='column' maxWidth='100%' my={{ sm: "14px" }}>
               <Text

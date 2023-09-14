@@ -8,6 +8,8 @@ import {
   Tr,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { Spinner } from '@chakra-ui/react'
+
 // Custom components
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
@@ -39,7 +41,7 @@ const Authors = ({ title, captions, data }) => {
             </Tr>
           </Thead>
           <Tbody>
-            {data.map((row, i) => {
+            {data ? data.map((row, i) => {
               return (
                 <TablesTableRow
                   index={i + 1}
@@ -49,9 +51,17 @@ const Authors = ({ title, captions, data }) => {
                   email={row.email}
                   createdAt={row.createdAt}
                   status={row.status}
+                  id={row._id}
                 />
               );
-            })}
+            }) :
+            <Spinner
+            thickness='4px'
+            speed='0.65s'
+            emptyColor='gray.200'
+            color='blue.500'
+            size='xl'
+          />}
           </Tbody>
         </Table>
       </CardBody>
