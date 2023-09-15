@@ -84,7 +84,7 @@ function SignIn() {
                         mt={{ md: "150px", lg: "80px" }}
                     >
                         <Heading color={titleColor} fontSize="32px" mb="10px">
-                            Welcome Back
+                            Вход
                         </Heading>
                         <Text
                             mb="36px"
@@ -93,7 +93,7 @@ function SignIn() {
                             fontWeight="bold"
                             fontSize="14px"
                         >
-                            Enter your login and password to sign in
+                            Введите логин и пароль для входа в систему
                         </Text>
                         <FormControl>
                             {error && 
@@ -112,7 +112,7 @@ function SignIn() {
                                 fontSize="sm"
                                 fontWeight="normal"
                             >
-                                Login
+                                Логин
                             </FormLabel>
                             <Input
                                 value={login}
@@ -121,7 +121,7 @@ function SignIn() {
                                 mb="24px"
                                 fontSize="sm"
                                 type="text"
-                                placeholder="Your login"
+                                placeholder="Ваш логин"
                                 size="lg"
                             />
                             <FormLabel
@@ -129,7 +129,7 @@ function SignIn() {
                                 fontSize="sm"
                                 fontWeight="normal"
                             >
-                                Password
+                                Пароль
                             </FormLabel>
                             <Input
                                 value={password}
@@ -138,12 +138,12 @@ function SignIn() {
                                 mb="36px"
                                 fontSize="sm"
                                 type="password"
-                                placeholder="Your password"
+                                placeholder="Ваш пароль"
                                 size="lg"
                             />
                             <Button
                                 onClick={handleSubmit}
-                                fontSize="10px"
+                                fontSize="16px"
                                 type="submit"
                                 bg="teal.300"
                                 w="100%"
@@ -158,28 +158,9 @@ function SignIn() {
                                     bg: "teal.400",
                                 }}
                             >
-                                SIGN IN
+                                Войти
                             </Button>
                         </FormControl>
-                        <Flex
-                            flexDirection="column"
-                            justifyContent="center"
-                            alignItems="center"
-                            maxW="100%"
-                            mt="0px"
-                        >
-                            <Text color={textColor} fontWeight="medium">
-                                Don't have an account?
-                                <Link
-                                    color={titleColor}
-                                    as="span"
-                                    ms="5px"
-                                    fontWeight="bold"
-                                >
-                                    Sign Up
-                                </Link>
-                            </Text>
-                        </Flex>
                     </Flex>
                 </Flex>
                 <Box

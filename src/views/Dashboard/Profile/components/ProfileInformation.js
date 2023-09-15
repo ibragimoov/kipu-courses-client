@@ -210,7 +210,10 @@ const ProfileInformation = ({
             <FormControl mt={4}>
               <FormLabel>Предметы</FormLabel>
               {actualSubjects.map((actualSubject, i) => (
+               <>
                 <Checkbox key={i} value={actualSubject} onChange={(e) => handleCheckboxEvent(e)} defaultChecked={subjects?.includes(actualSubject) ? true : false}>{ actualSubject }</Checkbox>
+                <br/>
+              </>
               ))}
             </FormControl>
           </ModalBody>

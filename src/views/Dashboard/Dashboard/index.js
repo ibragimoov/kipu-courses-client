@@ -28,7 +28,6 @@ import Projects from "./components/Projects";
 import SalesOverview from "./components/SalesOverview";
 import WorkWithTheRockets from "./components/WorkWithTheRockets";
 
-import { useSelector } from "react-redux";
 import { Redirect } from 'react-router-dom'
 import { parseCookies } from 'nookies'
 

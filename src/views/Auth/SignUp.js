@@ -14,7 +14,7 @@ import {
 import { useToast } from '@chakra-ui/react'
 // Assets
 import BgSignUp from "assets/img/BgSignUp.png";
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 
 import axios from '../../axios'
 
@@ -33,9 +33,6 @@ function SignUp() {
   const [phone, setPhone] = useState('')
   const [studyFrom, setStudyFrom] = useState('')
   const [subjects, setSubjects] = useState([])
-
-  // Form
-  const [isFromValid, setIsFromValid] = useState(false)
 
   const actualSubjects = [
     'Математика (профильная)',
@@ -61,6 +58,7 @@ function SignUp() {
     if (
       firstName.trim() === '' ||
       lastName.trim() === '' ||
+      patronimic.trim() === '' ||
       email.trim() === '' ||
       phone.trim() === '' ||
       studyFrom.trim() === '' ||
@@ -74,23 +72,21 @@ function SignUp() {
         position: 'bottom-right',
         isClosable: true,
       });
-      setIsFromValid(false);
+      return false
     } else {
-      setIsFromValid(true);
+      return true
     }
   };
 
   const onSubmit = () => {
-    validateForm()
-
-    if (isFromValid) {
+    if (validateForm()) {
       const newStudent = { 
         first_name: firstName,
         last_name: lastName,
         patronimic,
         email,
         phone,
-        studyFrom,
+        study_from: studyFrom,
         subjects
       }
   
@@ -194,8 +190,7 @@ function SignUp() {
               size='lg'
               value={lastName}  
               required
-              onChange={(e) =>{ setLastName(e.target.value) 
-                console.log(e.target.value)}}
+              onChange={(e) =>{ setLastName(e.target.value)}}
             />
             <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
               Имя{" "}
@@ -288,14 +283,19 @@ function SignUp() {
               *
               </Text>
             </FormLabel>
-              {actualSubjects.map((actualSubject, i) => (
-                <><Checkbox key={i} value={actualSubject} onChange={(e) => handleCheckboxEvent(e)} >{ actualSubject }</Checkbox><br/></>
-              ))}
+            {actualSubjects.map((actualSubject, i) => (
+              <Fragment key={i}>
+                <Checkbox value={actualSubject} onChange={(e) => handleCheckboxEvent(e)}>
+                  {actualSubject}
+                </Checkbox>
+                <br />
+              </Fragment>
+            ))}
+
             </FormControl>          
             <Button
               marginTop={'20px'}
               onClick={() => onSubmit()}
-              type='submit'
               bg='teal.300'
               fontSize='18px'
               color='white'
