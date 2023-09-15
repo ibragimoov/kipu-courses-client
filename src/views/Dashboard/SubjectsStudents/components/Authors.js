@@ -1,5 +1,8 @@
+import React from "react";
+
 // Chakra imports
 import {
+  Button,
   Table,
   Tbody,
   Text,
@@ -13,9 +16,9 @@ import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import CardHeader from "components/Card/CardHeader.js";
 import TablesTableRow from "components/Tables/TablesTableRow";
-import React from "react";
 
 const Authors = ({ title, captions, data }) => {
+  // Styles
   const textColor = useColorModeValue("teal.300", "white");
 
   return (
